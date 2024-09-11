@@ -8,7 +8,7 @@ import sys
 import warnings
 from typing import List
 from typing import Union
-
+from typing import Tuple
 import bs4
 
 from .download import _get_session
@@ -210,7 +210,7 @@ def download_folder(
     user_agent=None,
     skip_download: bool = False,
     resume=False,
-) -> Union[List[str], List[GoogleDriveFileToDownload], None]:
+) -> Tuple[Union[List[str], List[GoogleDriveFileToDownload], None],str]:
     """Downloads entire folder from URL.
 
     Parameters
@@ -281,7 +281,7 @@ def download_folder(
     )
     if not is_success:
         print("Failed to retrieve folder contents", file=sys.stderr)
-        return None
+        return None,""
 
     if not quiet:
         print("Retrieving folder contents completed", file=sys.stderr)
@@ -339,4 +339,4 @@ def download_folder(
             files.append(local_path)
     if not quiet:
         print("Download completed", file=sys.stderr)
-    return files
+    return files,gdrive_file.name
